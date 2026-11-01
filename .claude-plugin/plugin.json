@@ -9,6 +9,14 @@
     "url": "https://thelostagency.com"
   },
   "homepage": "https://brandvoice.thelostagency.com/guide-claude-connector.html",
+  "privacyPolicyUrl": "https://brandvoice.thelostagency.com/privacy.html",
+  "icon": ".claude-plugin/icon.png",
   "license": "MIT",
-  "keywords": ["brand voice", "compliance", "advertising claims", "marketing", "copywriting"]
+  "keywords": [
+    "brand voice",
+    "compliance",
+    "advertising claims",
+    "marketing",
+    "copywriting"
+  ]
 }
