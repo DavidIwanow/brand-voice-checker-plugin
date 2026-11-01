@@ -8,8 +8,12 @@
     "email": "support@brandvoice.thelostagency.com",
     "url": "https://thelostagency.com"
   },
-  "homepage": "https://brandvoice.thelostagency.com/guide-claude-connector.html",
+  "homepage": "https://brandvoice.thelostagency.com/",
+  "documentationUrl": "https://brandvoice.thelostagency.com/guide-claude-connector.html",
+  "supportUrl": "https://brandvoice.thelostagency.com/guide-claude-connector.html#troubleshooting",
+  "repository": "https://github.com/DavidIwanow/brand-voice-checker-plugin",
   "privacyPolicyUrl": "https://brandvoice.thelostagency.com/privacy.html",
+  "termsOfServiceUrl": "https://brandvoice.thelostagency.com/terms.html",
   "icon": ".claude-plugin/icon.png",
   "license": "MIT",
   "keywords": [
