@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "brand-voice-checker": {
+      "type": "http",
+      "url": "https://brandvoice.thelostagency.com/mcp"
+    }
+  }
+}
