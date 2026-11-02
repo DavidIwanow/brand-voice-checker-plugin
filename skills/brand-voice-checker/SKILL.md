@@ -11,7 +11,8 @@ credits.
 
 ## Costs — always say them first
 
-- Free: `quick_scan`, `explain_rules`, `get_balance`, `list_register`.
+- Free: `quick_scan`, `explain_rules`, `get_balance`, `list_register`, `list_audits`,
+  `get_audit_report`.
 - 1 credit each: `check_compliance`, `check_brand_voice`.
 - 1 credit per 2,000 characters: `rewrite_copy` (characters sent) and `draft_copy`
   (the `max_chars` requested, 200 to 8,000).
@@ -36,6 +37,20 @@ retry.
   for (for example UK, NL, US, EU); with no markets the check is Global, the strictest.
 - Never describe a quick scan with no keyword flags as compliant or cleared. Only
   `check_compliance` reads the judgement rules, the user's markets and their approved claims.
+
+## Site audits (free)
+
+A site content audit is a scan of many pages of a website, started and paid for on the website
+(https://brandvoice.thelostagency.com/site-audit.html). These tools only read audits already run.
+
+- "What did my audit of example.com find?", "which pages need work?": call `get_audit_report`
+  with the domain (its latest finished audit) or an `audit_id` from `list_audits`.
+- Lead with the pages with the most to review and the rules hit most; mention missing required
+  wording and claims that are not approved yet. Give the link to the full report.
+- Audit hits are keyword matches from the free layer, not a compliance verdict. For one page
+  that matters, offer `check_compliance` (1 credit) on its copy.
+- To start a new audit, or to re-run one, send the user to the site audit page; there is no
+  tool for it.
 
 ## Reading results
 
