@@ -2,7 +2,7 @@
   "name": "brand-voice-checker",
   "displayName": "Brand Voice Checker",
   "description": "Check marketing copy against your brand voice guide and 16 advertising-claims rules, and rewrite or draft copy in your brand's voice. Connects Claude to your Brand Voice account.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "The Lost Agency BV",
     "email": "support@brandvoice.thelostagency.com",

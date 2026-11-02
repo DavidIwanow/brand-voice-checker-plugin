@@ -18,7 +18,7 @@ Claude when to use the checks and what they cost.
 
 | Tool | Cost |
 | --- | --- |
-| `quick_scan`, `explain_rules`, `get_balance`, `list_register`, `list_audits`, `get_audit_report` | Free |
+| `quick_scan`, `explain_rules`, `get_balance`, `list_register`, `get_brand`, `list_audits`, `get_audit_report` | Free |
 | `check_compliance`, `check_brand_voice` | 1 credit |
 | `rewrite_copy`, `draft_copy` | 1 credit per 2,000 characters |
 
