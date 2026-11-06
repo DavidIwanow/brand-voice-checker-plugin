@@ -6,7 +6,7 @@ description: Use when writing, editing or reviewing marketing copy for a brand t
 # Working with Brand Voice Checker
 
 The Brand Voice Checker tools check marketing copy against the user's brand voice guide and
-against 16 advertising-claims rules. Some tools are free; others spend the user's Brand Voice
+against 17 advertising-claims rules. Some tools are free; others spend the user's Brand Voice
 credits.
 
 ## Costs — always say them first
@@ -19,8 +19,8 @@ credits.
 
 Before calling a paid tool, tell the user which tool you will run and what it costs, and wait
 for them to agree, unless they have already asked for that check. Report the cost line from
-each result. If a result says there are not enough credits, pass on the top-up link and do not
-retry.
+each result. If a result says there are not enough credits, tell the user and do not retry;
+credits are managed in their Brand Voice account on the website.
 
 ## Before writing copy for a brand
 
@@ -64,8 +64,8 @@ A site content audit is a scan of many pages of a website, started and paid for 
 ## The Chrome extension
 
 The Brand Voice Checker Chrome extension works on the page the user is viewing; none of it runs
-through these tools. When the user is working on a live web page, mention what it can do:
-free "Scan this page now" (keyword rules, reading ease, stock AI phrasing), the paid whole-page
+through these tools. If the user asks how to check a live web page in their browser, it offers a
+free "Scan this page now" (keyword rules, reading ease, stock AI phrasing), a paid whole-page
 compliance check (1 credit), how that page did in their site audits, and "Include in next
 audit". It is installed and connected from the website.
 

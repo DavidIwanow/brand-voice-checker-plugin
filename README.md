@@ -1,6 +1,6 @@
 # Brand Voice Checker for Claude
 
-Check marketing copy against your brand voice guide and 16 advertising-claims rules without
+Check marketing copy against your brand voice guide and 17 advertising-claims rules without
 leaving Claude, and rewrite or draft copy in your brand's voice. This plugin connects Claude to
 your [Brand Voice](https://brandvoice.thelostagency.com) account and adds a skill that tells
 Claude when to use the checks and what they cost.
