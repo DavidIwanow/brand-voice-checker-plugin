@@ -1,0 +1,4 @@
+# AI coding agents: local permission rules can hold full commands, credentials included.
+# .claude/settings.json stays committable for shared project settings.
+.claude/settings.local.json
+.cursor/
