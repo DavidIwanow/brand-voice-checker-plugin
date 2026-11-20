@@ -35,52 +35,48 @@ the tools live on the remote MCP server at `https://brandvoice.thelostagency.com
 | `.mcp.json` | Points Claude at the remote MCP server |
 | `skills/brand-voice-checker/SKILL.md` | When and how Claude uses the tools, and what they cost |
 | `README.md` | Public listing page: install line, tools and costs, privacy |
-| `.github/scripts/check_plugin.py` | Release checks (Python, standard library only) |
-| `.github/workflows/plugin-checks.yml` | Runs the checks on push, PR and every Monday |
+| `.claude/CLAUDE.md` | This file. Kept here, not at the root: a root `CLAUDE.md` ships with the plugin and fails the strict validator |
+
+## No scripts, programs or bytecode
+
+The plugin directory refuses scripts, programs and bytecode from organisations that are not
+Verified, and the whole repo is the plugin (`source: "./"`). Do not add `.py` files, other scripts,
+binaries or a CI workflow that needs them. `.gitignore` ignores `*.py`, `*.pyc` and `__pycache__/`.
+Never commit with `git add -A` without checking `git status` first.
 
 ## Keep these in step
 
-The release checks fail if any of these drift apart, so change them together:
+Nothing checks these automatically any more, so check them by hand before every release:
 
 - **Version:** `plugin.json` `version` and the `brand-voice-checker` entry's `version` in
-  `marketplace.json`. Raise it (semver) in any change to `.claude-plugin/`, `.mcp.json` or `skills/`.
-  Changes to `README.md`, `CLAUDE.md` or `.github/` alone need no bump.
+  `marketplace.json` must be the same. Raise it (semver) in any change to `.claude-plugin/`,
+  `.mcp.json` or `skills/`. Changes to `README.md` or `.claude/CLAUDE.md` alone need no bump.
 - **Description:** same text in `plugin.json` and the `marketplace.json` entry.
 - **Tools and prices:** the tools-and-costs table in `README.md` and the `## Costs` section of
-  `SKILL.md` must list the same tools at the same prices. They must also match the live server's
-  tool list.
+  `SKILL.md` must list the same tools at the same prices, and match the live server's tool list.
 - **Claims-rule count:** "17 rules" appears in `plugin.json`, `README.md` and `SKILL.md`; change all
   three if the server's count changes.
 
 ## Release checklist
 
 1. Make the change; raise the version in both manifests if shipped files changed.
-2. Run the checks locally (commands below); fix anything that fails.
-3. Commit on a branch, open a PR to `main`, and wait for **Plugin checks** to go green.
-4. Merge, then give the owner the PowerShell commands to update their local copy.
+2. Check the "Keep these in step" list above.
+3. Run the official validator (below); fix anything it reports, warnings included.
+4. Commit on a branch, open a PR to `main`, merge.
+5. Give the owner the PowerShell commands to update their local copy.
 
-## Running the checks (PowerShell)
+## Validate (PowerShell)
+
+The official validator. `--strict` fails on warnings; `--profile directory` adds the plugin
+directory's submission checks. With `marketplace.json` present, validating the folder checks the
+marketplace, so validate `plugin.json` on its own too.
 
 ```powershell
-python "C:\dev\brand-voice-checker-plugin\.github\scripts\check_plugin.py"
+npx --yes @anthropic-ai/claude-code@latest plugin validate --strict --profile directory "C:\dev\brand-voice-checker-plugin"
 ```
 
 ```powershell
-python "C:\dev\brand-voice-checker-plugin\.github\scripts\check_plugin.py" --online
-```
-
-```powershell
-npx --yes @anthropic-ai/claude-code@2.1.329 plugin validate --strict --profile directory "C:\dev\brand-voice-checker-plugin"
-```
-
-```powershell
-npx --yes @anthropic-ai/claude-code@2.1.329 plugin validate --strict "C:\dev\brand-voice-checker-plugin\.claude-plugin\plugin.json"
-```
-
-To compare the version against `main` (as a PR does):
-
-```powershell
-python "C:\dev\brand-voice-checker-plugin\.github\scripts\check_plugin.py" --base-ref origin/main
+npx --yes @anthropic-ai/claude-code@latest plugin validate --strict "C:\dev\brand-voice-checker-plugin\.claude-plugin\plugin.json"
 ```
 
 ## Test an install locally
@@ -93,9 +89,18 @@ claude plugin marketplace add "C:\dev\brand-voice-checker-plugin"
 claude plugin install brand-voice-checker@thelostagency
 ```
 
+## Update the local copy after a merge
+
+```powershell
+git -C "C:\dev\brand-voice-checker-plugin" checkout main
+```
+
+```powershell
+git -C "C:\dev\brand-voice-checker-plugin" pull origin main
+```
+
 ## Notes
 
-- `https://thelostagency.com` blocks non-browser requests; the link check retries it as a browser.
-  A 403 from bot protection is a warning, not a failure.
-- The validator is pinned to `@anthropic-ai/claude-code@2.1.329` in the workflow. Bump it on purpose.
+- `https://thelostagency.com` blocks non-browser requests (bot protection); a 403 from a script
+  does not mean the link is dead. Check it in a browser.
 - Never commit `.claude/settings.local.json` (it is in `.gitignore`).
