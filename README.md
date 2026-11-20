@@ -36,11 +36,12 @@ The first time Claude uses a Brand Voice tool, it asks you to sign in to your Br
 | Tool | Cost |
 | --- | --- |
 | `quick_scan`, `explain_rules`, `get_balance`, `list_register`, `get_brand`, `list_audits`, `get_audit_report` | Free |
-| `check_url_status`, `get_page_content`, `add_to_next_audit`, `detect_site`, `get_guide`, `get_inbox`, `compare_audits` | Free (daily limit per account) |
+| `check_url_status`, `get_page_content`, `add_to_next_audit`, `detect_site`, `get_guide`, `get_inbox`, `compare_audits`, `add_never_say` | Free (daily limit per account) |
 | `check_compliance`, `check_brand_voice` | 1 credit |
 | `rewrite_copy`, `draft_copy` | 1 credit per 2,000 characters |
 
-Credits are bought on the Brand Voice website; the plugin cannot buy anything.
+Credits are bought on the Brand Voice website; the plugin cannot buy anything. `add_never_say` adds
+banned phrases to your claims register (paid accounts); it cannot approve or remove anything.
 
 The free page, site, guide and inbox tools need a verified account and have a daily allowance
 per account (live page reads and site detection: 20 a day, 100 after buying credits). The
