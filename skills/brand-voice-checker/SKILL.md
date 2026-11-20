@@ -68,7 +68,8 @@ A site content audit is a scan of many pages of a website, started and paid for 
 ## Pages, sites, guides and the inbox (free, daily limit)
 
 These tools need a Brand Voice account with a verified email address. Each account has a daily
-allowance; when a result says the limit is used, tell the user when it resets and do not retry.
+allowance (`quick_scan` has one too); when a result says the limit is used, tell the user when it
+resets and do not retry.
 
 - "Has this page been checked?": call `check_url_status` with the full address. Report the audit
   result and date, whether it is on the next-audit list, and its tracked content checks. Checks

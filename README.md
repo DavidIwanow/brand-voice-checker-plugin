@@ -44,7 +44,7 @@ Credits are bought on the Brand Voice website; the plugin cannot buy anything.
 
 The free page, site, guide and inbox tools need a verified account and have a daily allowance
 per account (live page reads and site detection: 20 a day, 100 after buying credits). The
-limits are listed in the [guide](https://brandvoice.thelostagency.com/guide-claude-connector.html#daily-limits).
+limits, including the quick scan's from Claude (50 a day, 300 after buying credits), are listed in the [guide](https://brandvoice.thelostagency.com/guide-claude-connector.html#daily-limits).
 
 ## What it sends and stores
 
