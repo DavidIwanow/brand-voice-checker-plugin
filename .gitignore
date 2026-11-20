@@ -2,3 +2,8 @@
 # .claude/settings.json stays committable for shared project settings.
 .claude/settings.local.json
 .cursor/
+
+# Python bytecode must never ship in the plugin (the directory refuses it).
+__pycache__/
+*.pyc
+*.py
