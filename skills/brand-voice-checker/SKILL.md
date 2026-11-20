@@ -17,14 +17,15 @@ credits.
   `add_to_next_audit`, `detect_site`, `get_guide`, `get_inbox`, `compare_audits`, `add_never_say`,
   `plan_site_audit`, `plan_full_checks`.
 - 1 credit each: `check_compliance`, `check_brand_voice`, `check_and_track`.
-- Priced by size: `start_site_audit` (1 credit per 25 pages) and `start_full_checks` (1 credit
-  per page). Always run the matching plan tool first, tell the user the price, and pass that
-  price as `max_credits` only after they agree.
+- 1 credit per 25 pages: `start_site_audit` (pages not read are refunded).
+- 1 credit per page: `start_full_checks`.
 - 1 credit per 2,000 characters: `rewrite_copy` (characters sent) and `draft_copy`
   (the `max_chars` requested, 200 to 8,000).
 
 Before calling a paid tool, tell the user which tool you will run and what it costs, and wait
-for them to agree, unless they have already asked for that check. Report the cost line from
+for them to agree, unless they have already asked for that check. Audits and full checks are priced
+by their size: run the matching plan tool first, tell the user the price, and pass that price as
+max_credits only after they agree. Report the cost line from
 each result. If a result says there are not enough credits, tell the user and do not retry;
 credits are managed in their Brand Voice account on the website.
 
