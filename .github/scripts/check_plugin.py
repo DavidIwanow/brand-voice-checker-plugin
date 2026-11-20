@@ -25,6 +25,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 PLUGIN_JSON = ROOT / ".claude-plugin" / "plugin.json"
 MCP_JSON = ROOT / ".mcp.json"
+MARKETPLACE_JSON = ROOT / ".claude-plugin" / "marketplace.json"
 README = ROOT / "README.md"
 SKILLS_DIR = ROOT / "skills"
 
@@ -117,6 +118,35 @@ def check_icon(path: Path) -> None:
     size_kb = path.stat().st_size / 1024
     if size_kb > 1024:
         warn(f"icon is {size_kb:.0f} KB; keep it under 1 MB")
+
+
+# ---------------------------------------------------------------- marketplace
+def check_marketplace(manifest: dict, market: dict) -> None:
+    print("\nmarketplace.json")
+    mname = market.get("name", "")
+    if not SKILL_NAME.match(mname or "-"):
+        fail(f"marketplace.json: name '{mname}' must be lowercase kebab-case")
+    if not isinstance(market.get("owner"), dict) or not market["owner"].get("name"):
+        fail("marketplace.json: owner.name is missing")
+    plugins = market.get("plugins")
+    if not isinstance(plugins, list) or not plugins:
+        fail("marketplace.json: 'plugins' must be a non-empty list")
+        return
+    names = [p.get("name") for p in plugins if isinstance(p, dict)]
+    if len(names) != len(set(names)):
+        fail("marketplace.json: plugin names must be unique")
+    entry = next((p for p in plugins if isinstance(p, dict) and p.get("name") == manifest.get("name")), None)
+    if entry is None:
+        fail(f"marketplace.json does not list the plugin '{manifest.get('name')}'")
+        return
+    if entry.get("source") not in ("./", "."):
+        fail(f"marketplace.json: '{entry['name']}' source should be './' (this repo), got {entry.get('source')!r}")
+    # Fields that appear in both files must not drift apart.
+    for field in ("version", "description", "license", "homepage", "repository"):
+        if field in entry and entry[field] != manifest.get(field):
+            fail(f"marketplace.json: {field} {entry[field]!r} differs from plugin.json {manifest.get(field)!r}")
+    if not any("marketplace.json" in f for f in failures):
+        ok(f"marketplace '{mname}' lists '{entry['name']}' {entry.get('version', '')} in step with plugin.json")
 
 
 # ---------------------------------------------------------------- .mcp.json
@@ -405,6 +435,10 @@ def main() -> int:
     mcp = load_json(MCP_JSON) or {}
     if manifest:
         check_manifest(manifest)
+    if MARKETPLACE_JSON.exists():
+        market = load_json(MARKETPLACE_JSON)
+        if market and manifest:
+            check_marketplace(manifest, market)
     mcp_urls = check_mcp(mcp) if mcp else []
     skill_texts = check_skills()
     check_consistency(manifest, skill_texts, mcp_urls)

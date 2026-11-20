@@ -5,6 +5,23 @@ leaving Claude, and rewrite or draft copy in your brand's voice. This plugin con
 your [Brand Voice](https://brandvoice.thelostagency.com) account and adds a skill that tells
 Claude when to use the checks and what they cost.
 
+## Install
+
+In Claude Code, run:
+
+```
+/plugin install brand-voice-checker --marketplace DavidIwanow/brand-voice-checker-plugin
+```
+
+On Claude Code older than 2.1.275, add the marketplace first, then install:
+
+```
+/plugin marketplace add DavidIwanow/brand-voice-checker-plugin
+/plugin install brand-voice-checker@thelostagency
+```
+
+The first time Claude uses a Brand Voice tool, it asks you to sign in to your Brand Voice account.
+
 ## What it includes
 
 - **Connector:** the remote MCP server at `https://brandvoice.thelostagency.com/mcp`

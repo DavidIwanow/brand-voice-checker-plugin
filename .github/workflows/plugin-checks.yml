@@ -43,8 +43,14 @@ jobs:
 
       # The plugin directory's own validator. Pinned so a new release cannot change
       # the verdict without a commit here; bump the version deliberately.
-      - name: Official plugin validator
-        run: npx --yes @anthropic-ai/claude-code@2.1.329 plugin validate .
+      # --strict fails on warnings (unknown fields, missing metadata); --profile directory
+      # adds the plugin directory's submission checks. With marketplace.json present,
+      # validating "." checks the marketplace, so plugin.json is validated on its own too.
+      - name: Official validator (marketplace and plugin directory checks)
+        run: npx --yes @anthropic-ai/claude-code@2.1.329 plugin validate --strict --profile directory .
+
+      - name: Official validator (plugin.json)
+        run: npx --yes @anthropic-ai/claude-code@2.1.329 plugin validate --strict .claude-plugin/plugin.json
 
   online:
     name: Links and MCP endpoint

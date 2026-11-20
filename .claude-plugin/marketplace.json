@@ -1,0 +1,28 @@
+{
+  "name": "thelostagency",
+  "owner": {
+    "name": "The Lost Agency BV",
+    "email": "support@brandvoice.thelostagency.com",
+    "url": "https://thelostagency.com"
+  },
+  "metadata": {
+    "description": "Claude plugins from The Lost Agency."
+  },
+  "plugins": [
+    {
+      "name": "brand-voice-checker",
+      "source": "./",
+      "description": "Check marketing copy against your brand voice guide and 17 advertising-claims rules, and rewrite or draft copy in your brand's voice. Connects Claude to your Brand Voice account.",
+      "version": "1.0.4",
+      "author": {
+        "name": "The Lost Agency BV",
+        "email": "support@brandvoice.thelostagency.com"
+      },
+      "homepage": "https://brandvoice.thelostagency.com/",
+      "repository": "https://github.com/DavidIwanow/brand-voice-checker-plugin",
+      "license": "MIT",
+      "category": "productivity",
+      "keywords": ["brand voice", "compliance", "advertising claims", "marketing", "copywriting"]
+    }
+  ]
+}
