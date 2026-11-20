@@ -1,0 +1,61 @@
+name: Plugin checks
+
+# Runs on every push and pull request, before each release, and once a week so a
+# dead link or a down MCP server is noticed even when nothing in the repo changes.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1" # Mondays 06:17 UTC
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Manifest, skill and consistency
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Offline checks (JSON, manifest, icon, skill front matter, README vs skill)
+        run: python .github/scripts/check_plugin.py
+
+      - name: Version bump (pull requests that change shipped files)
+        if: github.event_name == 'pull_request'
+        run: python .github/scripts/check_plugin.py --base-ref "origin/${{ github.base_ref }}"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # The plugin directory's own validator. Pinned so a new release cannot change
+      # the verdict without a commit here; bump the version deliberately.
+      - name: Official plugin validator
+        run: npx --yes @anthropic-ai/claude-code@2.1.329 plugin validate .
+
+  online:
+    name: Links and MCP endpoint
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Live URLs and MCP server answer
+        run: python .github/scripts/check_plugin.py --online
