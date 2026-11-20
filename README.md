@@ -36,16 +36,22 @@ The first time Claude uses a Brand Voice tool, it asks you to sign in to your Br
 | Tool | Cost |
 | --- | --- |
 | `quick_scan`, `explain_rules`, `get_balance`, `list_register`, `get_brand`, `list_audits`, `get_audit_report` | Free |
+| `check_url_status`, `get_page_content`, `add_to_next_audit`, `detect_site`, `get_guide`, `get_inbox`, `compare_audits` | Free (daily limit per account) |
 | `check_compliance`, `check_brand_voice` | 1 credit |
 | `rewrite_copy`, `draft_copy` | 1 credit per 2,000 characters |
 
 Credits are bought on the Brand Voice website; the plugin cannot buy anything.
 
+The free page, site, guide and inbox tools need a verified account and have a daily allowance
+per account (live page reads and site detection: 20 a day, 100 after buying credits). The
+limits are listed in the [guide](https://brandvoice.thelostagency.com/guide-claude-connector.html#daily-limits).
+
 ## What it sends and stores
 
 The plugin runs no code on your machine. When a tool is used, Claude sends the copy and the
 options you chose (brand domain, markets, language) to `https://brandvoice.thelostagency.com`.
-That copy is processed and returned, not kept. Brand Voice keeps a record of each connection
+That copy is processed and returned, not kept. `get_page_content` and `detect_site` read public
+web pages from Brand Voice's server when asked (robots.txt honoured, nothing stored). Brand Voice keeps a record of each connection
 (app name, dates, fingerprints of its tokens) and a usage record of each paid check. Details:
 [privacy policy](https://brandvoice.thelostagency.com/privacy.html), section 6.
 
