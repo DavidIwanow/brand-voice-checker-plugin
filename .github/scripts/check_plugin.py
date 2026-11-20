@@ -362,22 +362,63 @@ def check_version_bump(manifest: dict, base_ref: str) -> None:
 
 
 # ---------------------------------------------------------------- online
-def http_status(url: str, method: str = "GET", body: bytes | None = None, headers: dict | None = None) -> int:
+BROWSER_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+    "(KHTML, like Gecko) Chrome/131.0 Safari/537.36"
+)
+
+
+def http_fetch(url: str, method: str = "GET", body: bytes | None = None,
+               headers: dict | None = None) -> tuple[int, dict, str]:
+    """Return (status, lower-cased headers, first 2 KB of body); status 0 = no response."""
     req = urllib.request.Request(url, data=body, method=method, headers={
         "User-Agent": "plugin-release-check/1.0", **(headers or {}),
     })
     for attempt in range(3):
         try:
             with urllib.request.urlopen(req, timeout=20) as resp:
-                return resp.status
+                return resp.status, {k.lower(): v for k, v in resp.headers.items()}, ""
         except urllib.error.HTTPError as e:
             if e.code < 500 or attempt == 2:
-                return e.code
+                snippet = e.read(2048).decode("utf-8", "replace") if e.fp else ""
+                return e.code, {k.lower(): v for k, v in (e.headers or {}).items()}, snippet
         except (urllib.error.URLError, TimeoutError, ConnectionError):
             if attempt == 2:
-                return 0
+                return 0, {}, ""
         time.sleep(2 * (attempt + 1))
-    return 0
+    return 0, {}, ""
+
+
+def http_status(url: str, method: str = "GET", body: bytes | None = None, headers: dict | None = None) -> int:
+    return http_fetch(url, method, body, headers)[0]
+
+
+def is_bot_challenge(headers: dict, body: str) -> bool:
+    """True when a 403 is a bot-protection challenge (Cloudflare and similar), not a dead page."""
+    if headers.get("cf-mitigated") == "challenge":
+        return True
+    server = headers.get("server", "").lower()
+    markers = ("just a moment", "attention required", "cf-chl", "captcha", "challenge-platform",
+               "bot protection", "sgcaptcha", "imunify360")
+    return any(m in body.lower() for m in markers) or (
+        server in ("cloudflare", "sucuri/cloudproxy", "akamaighost") and "<html" in body.lower()
+    )
+
+
+def check_link(url: str) -> None:
+    page = url.split("#")[0]
+    status, headers, body = http_fetch(page)
+    if status == 403:
+        # Many sites refuse non-browser clients and data-centre IPs; ask again as a browser.
+        status, headers, body = http_fetch(page, headers={"User-Agent": BROWSER_UA, "Accept": "text/html"})
+    if 200 <= status < 400:
+        ok(f"{status} {url}")
+    elif status in (403, 429) and is_bot_challenge(headers, body):
+        warn(f"{url} returned {status} behind bot protection ({headers.get('server', 'unknown server')}); "
+             "could not verify from CI, check it in a browser")
+    else:
+        server = headers.get("server", "unknown server")
+        fail(f"{url} returned {status or 'no response'} ({server})")
 
 
 def check_online(manifest: dict, skill_texts: dict[str, str], mcp_urls: list[str]) -> None:
@@ -392,12 +433,7 @@ def check_online(manifest: dict, skill_texts: dict[str, str], mcp_urls: list[str
         urls.update(u.rstrip(".,;:") for u in URL.findall(text))
     urls -= set(mcp_urls)
     for url in sorted(urls):
-        page = url.split("#")[0]
-        status = http_status(page)
-        if 200 <= status < 400:
-            ok(f"{status} {url}")
-        else:
-            fail(f"{url} returned {status or 'no response'}")
+        check_link(url)
 
     print("\nMCP endpoint")
     init = json.dumps({
