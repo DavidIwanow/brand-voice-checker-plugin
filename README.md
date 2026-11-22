@@ -36,16 +36,27 @@ The first time Claude uses a Brand Voice tool, it asks you to sign in to your Br
 | Tool | Cost |
 | --- | --- |
 | `quick_scan`, `explain_rules`, `get_balance`, `list_register`, `get_brand`, `list_audits`, `get_audit_report` | Free |
-| `check_compliance`, `check_brand_voice` | 1 credit |
+| `check_url_status`, `get_page_content`, `add_to_next_audit`, `detect_site`, `get_guide`, `get_inbox`, `compare_audits`, `add_never_say`, `plan_site_audit`, `plan_full_checks` | Free (daily limit per account) |
+| `check_compliance`, `check_brand_voice`, `check_and_track` | 1 credit |
 | `rewrite_copy`, `draft_copy` | 1 credit per 2,000 characters |
+| `start_site_audit` | 1 credit per 25 pages (pages not read are refunded) |
+| `start_full_checks` | 1 credit per page |
 
-Credits are bought on the Brand Voice website; the plugin cannot buy anything.
+Credits are bought on the Brand Voice website; the plugin cannot buy anything. `add_never_say` adds
+banned phrases to your claims register (paid accounts); it cannot approve or remove anything.
+`start_site_audit` and `start_full_checks` are priced first by their plan tools and take the agreed
+price as `max_credits`: anything costing more is refused without a charge.
+
+The free page, site, guide and inbox tools need a verified account and have a daily allowance
+per account (live page reads and site detection: 20 a day, 100 after buying credits). The
+limits, including the quick scan's from Claude (50 a day, 300 after buying credits), are listed in the [guide](https://brandvoice.thelostagency.com/guide-claude-connector.html#daily-limits).
 
 ## What it sends and stores
 
 The plugin runs no code on your machine. When a tool is used, Claude sends the copy and the
 options you chose (brand domain, markets, language) to `https://brandvoice.thelostagency.com`.
-That copy is processed and returned, not kept. Brand Voice keeps a record of each connection
+That copy is processed and returned, not kept. `get_page_content` and `detect_site` read public
+web pages from Brand Voice's server when asked (robots.txt honoured, nothing stored). Brand Voice keeps a record of each connection
 (app name, dates, fingerprints of its tokens) and a usage record of each paid check. Details:
 [privacy policy](https://brandvoice.thelostagency.com/privacy.html), section 6.
 
