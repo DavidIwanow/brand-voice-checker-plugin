@@ -122,6 +122,10 @@ audit". It is installed and connected from the website.
   need the listed fixes or substantiation. Quote each flag's fix.
 - Flags marked as approved claims are covered by the user's register; leave that wording alone.
 - A brand voice score comes with lines that drift from the voice; offer `rewrite_copy` for them.
+- A flag's fix can end with `Note: Check before using this suggestion: …`. That suggested wording
+  keeps or adds a claim the claims rules flag (a superlative, a customer number, a guarantee).
+  Pass the note on with the fix, and do not offer that wording as ready to publish unless it names
+  its source or is qualified as the note asks.
 - A rewrite or draft is not compliance-checked. Say so, and offer `check_compliance` on it.
 
 ## When something is missing
