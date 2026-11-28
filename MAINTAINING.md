@@ -1,4 +1,4 @@
-# CLAUDE.md
+# Maintaining this plugin
 
 Guidance for Claude when working in this repository.
 
@@ -35,7 +35,7 @@ the tools live on the remote MCP server at `https://brandvoice.thelostagency.com
 | `.mcp.json` | Points Claude at the remote MCP server |
 | `skills/brand-voice-checker/SKILL.md` | When and how Claude uses the tools, and what they cost |
 | `README.md` | Public listing page: install line, tools and costs, privacy |
-| `.claude/CLAUDE.md` | This file. Kept here, not at the root: a root `CLAUDE.md` ships with the plugin and fails the strict validator |
+| `MAINTAINING.md` | This file. Not called `CLAUDE.md`: the plugin directory refuses any `CLAUDE.md`, `CLAUDE.local.md` or `AGENTS.md` (anywhere, `.claude/` included) from an organisation that is not Verified, and refused 1.0.12 for `.claude/CLAUDE.md` |
 
 ## No scripts, programs or bytecode
 
@@ -50,7 +50,7 @@ Nothing checks these automatically any more, so check them by hand before every 
 
 - **Version:** `plugin.json` `version` and the `brand-voice-checker` entry's `version` in
   `marketplace.json` must be the same. Raise it (semver) in any change to `.claude-plugin/`,
-  `.mcp.json` or `skills/`. Changes to `README.md` or `.claude/CLAUDE.md` alone need no bump.
+  `.mcp.json` or `skills/`. Changes to `README.md` or `MAINTAINING.md` alone need no bump.
 - **Description:** same text in `plugin.json` and the `marketplace.json` entry.
 - **Tools and prices:** the tools-and-costs table in `README.md` and the `## Costs` section of
   `SKILL.md` must list the same tools at the same prices, and match the live server's tool list.
